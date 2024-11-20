@@ -1,0 +1,44 @@
+<!-- compare_result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>So sánh giá</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Các kiểu CSS cho trang so sánh giá */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        /* Thêm các kiểu khác nếu cần */
+    </style>
+</head>
+<body>
+    <h1>So sánh giá sản phẩm</h1>
+    <div id="comparison-results">
+        {% for product in products %}
+        <div class="product">
+            <h3>{{ product.product_name }} - {{ product.website }}</h3>
+            <p class="price">Giá hiện tại: {{ product.current_price | format_price }}</p>
+            <p class="old-price">Giá gốc: {{ product.original_price | format_price }}</p>
+            <p class="description">{{ product.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

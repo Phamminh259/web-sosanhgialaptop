@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa Tài Khoản</title>
+    <style>
+        /* Thêm một số kiểu CSS nếu cần */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="email"], input[type="password"], select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 300px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .alert {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sửa Tài Khoản</h1>
+    
+    <form action="{{ url_for('edit_account', id=account.id) }}" method="post">
+        <input type="email" name="email" value="{{ account.email }}" placeholder="Email" required>
+        <input type="text" name="username" value="{{ account.username }}" placeholder="Tên người dùng" required>
+        <select name="role" required>
+            <option value="User" {% if account.role == 'User' %}selected{% endif %}>User</option>
+            <option value="Admin" {% if account.role == 'Admin' %}selected{% endif %}>Admin</option>
+        </select>
+        <button type="submit">Cập nhật tài khoản</button>
+    </form>
+    
+    <!-- Hiển thị thông báo lỗi -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

@@ -1,0 +1,1975 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        #search-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px; 
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product .price {
+            font-size: 18px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product .old-price {
+            font-size: 14px;
+            color: #777;
+            text-decoration: line-through;
+            margin-bottom: 10px;
+        }
+
+        .product .description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .product a,
+        .notification-form button {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            margin: 5px 0; 
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
+            border: none;
+        }
+
+        .product a:hover,
+        .notification-form button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .notification-form {
+            display: none;
+            margin-top: 10px;
+            flex-shrink: 0; 
+        }
+
+        .notification-form input[type="email"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 120px); 
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .notification-form button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .notification-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div>
+        <h2>Kết quả tìm kiếm:</h2>
+        <div id="search-results">
+            {% for product in products %}
+                <div class="product">
+                    <img src="{{ product.img }}" alt="{{ product.product_name }}">
+                    <h3>{{ product.product_name }} - {{ product.website }}</h3>
+                    <p class="price">Giá hiện tại: {{ product.current_price | format_price }}</p>
+                    <p class="old-price">Giá gốc: {{ product.original_price | format_price }}</p>
+                    <p class="description">{{ product.description }}</p>
+
+                    {% if product.website == 'laptop88' %}
+                        <a href="https://laptop88.vn/laptop-moi.html">Đi tới cửa hàng</a>
+                    {% elif product.website == 'tinhocngoisao' %}
+                        <a href="https://tinhocngoisao.com/collections/laptop-ban-chay">Đi tới cửa hàng</a>
+                    {% elif product.website == 'minhvu' %}
+                        <a href="https://minhvu.vn">Đi tới cửa hàng</a>
+                    {% elif product.website == 'anphat' %}
+                        <a href="https://www.anphatpc.com.vn">Đi tới cửa hàng</a>
+                    {% else %}
+                        <a href="{{ product.website }}">Đi tới cửa hàng</a>
+                    {% endif %}
+
+                    <a href="/compare/{{ product.id }}">So Sánh Giá</a>
+                    <a href="/price_history/{{ product.id }}">Xem lịch sử giá sản phẩm</a>
+                    <a href="/product_detail/{{ product.id }}">Xem chi tiết sản phẩm</a>
+                    
+                    <br><br>
+
+                    
+                    <div class="notification-form">
+                        <form action="{{ url_for('submit_notification') }}" method="POST">
+                            <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                            <input type="hidden" name="product_id" value="{{ product.id }}">  
+                            <button type="submit" class="submit-notification">Gửi</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm kiếm sản phẩm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 400px;
+            border-radius: 25px 0 0 25px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input[type="text"]:focus {
+            border-color: #3498db;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #2980b9;
+        }
+
+         
+          #filter-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        #filter-options label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        #filter-options select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            background-color: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        #filter-options select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        
+        #search-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            margin-bottom: 5px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product .price {
+            font-size: 18px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product .old-price {
+            font-size: 14px;
+            color: #777;
+            text-decoration: line-through;
+            margin-bottom: 10px;
+        }
+
+        .product .description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .product a,
+        .notification-form button {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            margin: 5px 0;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
+            border: none;
+            display: inline-block;
+        }
+
+        .product a:hover,
+        .notification-form button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .notification-form {
+            display: none;
+            margin-top: 10px;
+            flex-shrink: 0;
+        }
+
+        .notification-form input[type="email"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: calc(100% - 120px);
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .notification-form button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .notification-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  
+    <div class="search-container">
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="Nhập tên sản phẩm cần tìm..." required>
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+
+     
+    <div id="filter-options">
+        <label for="sort">Sắp xếp giá:</label>
+        <select id="sort" name="sort">
+            <option value="asc">Giá tăng dần</option>
+            <option value="desc">Giá giảm dần</option>
+        </select>
+
+        <label for="website-filter">Lọc theo website:</label>
+        <select id="website-filter" name="website">
+            <option value="">Tất cả</option>
+            <option value="laptop88">Laptop88</option>
+            <option value="tinhocngoisao">Tinhocngoisao</option>
+            <option value="minhvu">Minhvu</option>
+            <option value="anphat">Anphat</option>
+        </select>
+    </div>
+
+    <div id="search-results">
+        {% for product in products %}
+        <div class="product">
+            <img src="{{ product.img }}" alt="{{ product.product_name }}">
+            <h3>{{ product.product_name }} - {{ product.website }}</h3>
+            <p class="price">Giá hiện tại: {{ product.current_price | format_price }}</p>
+            <p class="old-price">Giá gốc: {{ product.original_price | format_price }}</p>
+            <p class="description">{{ product.description }}</p>
+
+            {% if product.website == 'laptop88' %}
+            <a href="https://laptop88.vn/laptop-moi.html">Đi tới cửa hàng</a>
+            {% elif product.website == 'tinhocngoisao' %}
+            <a href="https://tinhocngoisao.com/collections/laptop-ban-chay">Đi tới cửa hàng</a>
+            {% elif product.website == 'minhvu' %}
+            <a href="https://minhvu.vn">Đi tới cửa hàng</a>
+            {% elif product.website == 'anphat' %}
+            <a href="https://www.anphatpc.com.vn">Đi tới cửa hàng</a>
+            {% else %}
+            <a href="{{ product.website }}">Đi tới cửa hàng</a>
+            {% endif %}
+
+            <a href="/compare/{{ product.id }}">So Sánh Giá</a>
+            <a href="/price_history/{{ product.id }}">Xem lịch sử giá sản phẩm</a>
+            <a href="/product_detail/{{ product.id }}">Xem chi tiết sản phẩm</a>
+
+            <br><br>
+
+         
+        </div>
+        {% endfor %}
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#sort, #website-filter').change(function() {
+                var sortOrder = $('#sort').val();
+                var website = $('#website-filter').val();
+                
+                $.ajax({
+                    url: '/filter_products',
+                    type: 'GET',
+                    data: {
+                        sort: sortOrder,
+                        website: website
+                    },
+                    success: function(response) {
+                        $('#search-results').html(response); 
+                    }
+                });
+            });
+
+          
+        });
+    </script>
+
+</body>
+</html> -->
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm kiếm sản phẩm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 400px;
+            border-radius: 25px 0 0 25px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input[type="text"]:focus {
+            border-color: #3498db;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #2980b9;
+        }
+
+        #filter-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        #filter-options label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        #filter-options select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            background-color: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        #filter-options select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        #search-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: relative; /* Position for internal alignment */
+            min-height: 400px; /* Minimum height for consistent display */
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            margin-bottom: 5px;
+            height: 60px; /* Set height to allow for three lines */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3; /* Allow for 3 lines */
+        }
+
+        .product .price {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #e74c3c; /* Highlight current price in red */
+        }
+
+        .product .old-price {
+            margin-bottom: 5px;
+            text-decoration: line-through; /* Strikethrough for old price */
+            color: #999; /* Gray color for old price */
+        }
+
+        .product .description {
+            height: 70px; /* Set height to allow for seven lines */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 7; /* Allow for 7 lines */
+            margin-bottom: 15px; /* Space below description */
+        }
+
+        .button {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px 0; /* Margin for spacing between buttons */
+            width: 100%; /* Full width buttons */
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Add to tab button style */
+        .add-to-tab {
+            font-size: 30px; /* Increase size for visibility */
+            color: #3498db;
+            border: none;
+            background: none;
+            cursor: pointer;
+            margin-top: auto; /* Align to the bottom of the product card */
+        }
+
+        #icon-tab {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            cursor: pointer;
+            font-size: 30px;
+            color: #3498db;
+        }
+
+        #tab-content {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            width: 800px;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* General style for .tab-product container */
+.tab-product {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    gap: 15px; /* Increased spacing for better appearance */
+}
+
+.tab-product img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.tab-product span {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #333;
+    margin-right: 10px; /* Space between text and buttons */
+}
+
+/* Unified style for all buttons in the tab */
+.tab-product .button,
+#price-history-button {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 5px 15px; /* Consistent padding for all buttons */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+    margin-right: 10px; /* Space between buttons */
+}
+
+.tab-product .button:last-child,
+#price-history-button {
+    margin-right: 0; /* No extra space for the last button */
+}
+
+.tab-product .button:hover,
+#price-history-button:hover {
+    background-color: #2980b9;
+}
+
+
+        /* Price history section */
+        #price-history {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="search-container">
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="Nhập tên sản phẩm cần tìm..." required>
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+
+    <div id="filter-options">
+        <label for="sort">Sắp xếp giá:</label>
+        <select id="sort" name="sort">
+            <option value="asc">Giá tăng dần</option>
+            <option value="desc">Giá giảm dần</option>
+        </select>
+
+        <label for="website-filter">Lọc theo website:</label>
+        <select id="website-filter" name="website">
+            <option value="">Tất cả</option>
+            <option value="laptop88">Laptop88</option>
+            <option value="tinhocngoisao">Tinhocngoisao</option>
+            <option value="minhvu">Minhvu</option>
+            <option value="anphat">Anphat</option>
+        </select>
+    </div>
+    
+
+    <div id="search-results">
+        {% for product in products %}
+        <div class="product">
+            <img src="{{ product.img }}" alt="{{ product.product_name }}">
+            <h3>{{ product.product_name }} - {{ product.website }}</h3>
+            <p class="price">Giá hiện tại: {{ product.current_price | format_price }}</p>
+            <p class="old-price">Giá gốc: {{ product.original_price | format_price }}</p>
+            <p class="description">{{ product.description }}</p>
+
+            <button class="button" onclick="openStore('{{ product.website }}')">Đi tới cửa hàng</button>
+            <button class="button" onclick="window.open('/compare/{{ product.id }}', '_self')">So Sánh Giá</button>
+            
+            
+            
+            <button class="button" onclick="window.open('/price_history/{{ product.id }}', '_self')">Xem lịch sử giá sản phẩm</button>
+            <button class="button" onclick="window.open('/product_detail/{{ product.id }}', '_self')">Xem chi tiết sản phẩm</button>
+
+            <button class="add-to-tab">+</button>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        function openStore(website) {
+            let url;
+            switch (website) {
+                case 'laptop88':
+                    url = 'https://laptop88.vn/laptop-moi.html';
+                    break;
+                case 'tinhocngoisao':
+                    url = 'https://tinhocngoisao.com/collections/laptop-ban-chay';
+                    break;
+                case 'minhvu':
+                    url = 'https://minhvu.vn';
+                    break;
+                case 'anphat':
+                    url = 'https://www.anphatpc.com.vn';
+                    break;
+                default:
+                    url = website;
+            }
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <div id="tab-content">
+        <h2>Sản phẩm đã chọn</h2>
+        <div id="selected-products"></div>
+        <div id="price-history">
+            <button id="price-history-button">Xem lịch sử giá</button>
+        </div>
+    </div>
+
+    <div id="icon-tab">
+        <i class="fas fa-cart-plus"></i>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+         $(document).ready(function() {
+            $('#sort, #website-filter').change(function() {
+                var sortOrder = $('#sort').val();
+                var website = $('#website-filter').val();
+                
+                $.ajax({
+                    url: '/filter_products',
+                    type: 'GET',
+                    data: {
+                        sort: sortOrder,
+                        website: website
+                    },
+                    success: function(response) {
+                        $('#search-results').html(response); 
+                    }
+                });
+            });
+
+          
+        });
+        $(document).ready(function () {
+            let selectedProducts = [];
+
+            // Show the tab content when clicking the cart icon
+            $('#icon-tab').click(function () {
+                $('#tab-content').toggle();
+            });
+
+           
+            
+
+            // Add product to selected products
+            $('.add-to-tab').click(function () {
+                const productName = $(this).closest('.product').find('h3').text().split(' - ')[0];
+                const productImg = $(this).closest('.product').find('img').attr('src');
+                const productPrice = $(this).closest('.product').find('.price').text().replace('Giá hiện tại: ', '');
+                const productLink = $(this).closest('.product').find('.button').attr('onclick').match(/'([^']+)'/)[1];
+
+                // Check if product is already selected
+                if (selectedProducts.includes(productName)) {
+                    alert('Sản phẩm đã được chọn!');
+                    return;
+                }
+
+                selectedProducts.push(productName);
+
+                // Append product to selected products
+                $('#selected-products').append(`
+                    <div class="tab-product">
+                        <img src="${productImg}" alt="${productName}">
+                        <span>${productName} - ${productPrice}</span>
+                        <button class="button" onclick="window.open('${productLink}', '_blank')">Xem chi tiết</button>
+                        <button class="button store-button" onclick="window.open('${productLink}', '_blank')">Đi tới cửa hàng</button>
+                        <button class="remove-product button">Xóa</button>
+                    </div>
+                `);
+            });
+
+            // Remove product from the tab
+            $(document).on('click', '.remove-product', function () {
+                const productName = $(this).siblings('span').text().split(' - ')[0];
+                selectedProducts = selectedProducts.filter(product => product !== productName);
+                $(this).parent().remove();
+            });
+
+            // Price history button click
+            $('#price-history-button').click(function () {
+                alert('Chức năng lịch sử giá chưa được cài đặt!');
+            });
+        });
+        
+            
+
+          
+        
+    </script>
+</body>
+
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm kiếm sản phẩm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            width: 400px;
+            border-radius: 25px 0 0 25px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input[type="text"]:focus {
+            border-color: #3498db;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #2980b9;
+        }
+
+        #filter-options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        #filter-options label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        #filter-options select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            background-color: #fff;
+            transition: border-color 0.3s ease;
+        }
+
+        #filter-options select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        #search-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: relative; /* Position for internal alignment */
+            min-height: 400px; /* Minimum height for consistent display */
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product h3 {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            margin-bottom: 5px;
+            height: 60px; /* Set height to allow for three lines */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3; /* Allow for 3 lines */
+        }
+
+        .product .price {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #e74c3c; /* Highlight current price in red */
+        }
+
+        .product .old-price {
+            margin-bottom: 5px;
+            text-decoration: line-through; /* Strikethrough for old price */
+            color: #999; /* Gray color for old price */
+        }
+
+        .product .description {
+            height: 70px; /* Set height to allow for seven lines */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 7; /* Allow for 7 lines */
+            margin-bottom: 15px; /* Space below description */
+        }
+
+        .button {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px 0; /* Margin for spacing between buttons */
+            width: 100%; /* Full width buttons */
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Add to tab button style */
+        .add-to-tab {
+            font-size: 30px; /* Increase size for visibility */
+            color: #3498db;
+            border: none;
+            background: none;
+            cursor: pointer;
+            margin-top: auto; /* Align to the bottom of the product card */
+        }
+
+        #icon-tab {
+            position: fixed;
+            bottom: 50px;
+            left: 50px;
+            cursor: pointer;
+            font-size: 60px;
+            color: #3498db;
+        }
+
+        #tab-content {
+            display: none;
+            position: fixed;
+            bottom: 70px;
+            left: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            width: 800px;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* General style for .tab-product container */
+.tab-product {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    gap: 15px; /* Increased spacing for better appearance */
+}
+
+.tab-product img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.tab-product span {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #333;
+    margin-right: 10px; /* Space between text and buttons */
+}
+
+/* Unified style for all buttons in the tab */
+.tab-product .button,
+#price-history-button {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 5px 15px; /* Consistent padding for all buttons */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+    margin-right: 10px; /* Space between buttons */
+}
+
+.tab-product .button:last-child,
+#price-history-button {
+    margin-right: 0; /* No extra space for the last button */
+}
+
+.tab-product .button:hover,
+#price-history-button:hover {
+    background-color: #2980b9;
+}
+
+
+        /* Price history section */
+        #price-history {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+        #price-filter {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust spacing to match the sorting section */
+    justify-content: center; /* Center align items */
+    margin-bottom: 20px; /* Ensure there's space below */
+}
+
+#price-filter label {
+    font-size: 16px;
+    color: #333;
+}
+
+#price-filter input[type="number"] {
+    width: 80px; /* Keep the width as before */
+    padding: 5px; /* Maintain padding */
+    border-radius: 5px; /* Round corners */
+    border: 1px solid #ddd; /* Border color */
+    font-size: 16px; /* Keep font size consistent */
+    transition: border-color 0.3s ease; /* Transition on focus */
+}
+
+#price-filter input[type="number"]:focus {
+    border-color: #3498db; /* Change border color on focus */
+    outline: none; /* Remove outline */
+}
+
+#price-range-slider {
+    width: 200px; /* Maintain width for the slider */
+}
+
+/* CSS cho nút refresh nổi bật trên cùng */
+.refresh-button {
+    position: fixed; /* Giữ vị trí cố định trên trang */
+    top: 10px; /* Cách mép trên 10px */
+    right: 10px; /* Cách mép phải 10px */
+    background-color: #ff5e57; /* Màu nền */
+    color: white; /* Màu chữ */
+    border: none; /* Không viền */
+    border-radius: 50%; /* Tạo nút tròn */
+    width: 40px; /* Chiều rộng nút */
+    height: 40px; /* Chiều cao nút */
+    display: flex; /* Dùng flex để căn giữa */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    cursor: pointer; /* Con trỏ dạng tay khi hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    transition: transform 0.2s, background-color 0.2s; /* Hiệu ứng chuyển đổi */
+    z-index: 9999; /* Đảm bảo nút nằm nổi trên cùng các phần khác */
+}
+
+.refresh-button:hover {
+    background-color: #ff7675; /* Màu nền khi hover */
+    transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+.refresh-button i {
+    font-size: 18px; /* Kích thước icon */
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="search-container">
+        <form action="/search" method="get">
+            <input type="text" name="query" placeholder="Nhập tên sản phẩm cần tìm..." required>
+            <button type="submit">Tìm kiếm</button>
+        </form>
+    </div>
+
+    <div id="filter-options">
+        <label for="sort">Sắp xếp giá:</label>
+        <select id="sort" name="sort">
+            <option value="">--- Không sắp xếp ---</option> <!-- Tùy chọn không sắp xếp -->
+            <option value="asc">Giá tăng dần</option>
+            <option value="desc">Giá giảm dần</option>
+        </select>
+        <label for="website-filter">Lọc theo website:</label>
+        <select id="website-filter" name="website">
+            <option value="">Tất cả</option>
+            <option value="laptop88">Laptop88</option>
+            <option value="tinhocngoisao">Tinhocngoisao</option>
+            <option value="minhvu">Minhvu</option>
+            <option value="anphat">Anphat</option>
+        </select>
+    </div>
+    <div id="price-filter">
+        <label for="min-price">Giá từ:</label>
+        <input type="number" id="min-price" name="min_price" placeholder="Từ" min="0">
+        <label for="max-price">đến</label>
+        <input type="number" id="max-price" name="max_price" placeholder="Đến" min="0">
+        <input type="range" id="price-range-slider" min="0" max="100000000" step="10000">
+    </div>
+    <button id="refresh-button" class="refresh-button">
+        <i class="fas fa-sync-alt"></i> <!-- Icon làm mới -->
+    </button>
+
+    <div id="search-results">
+        {% for product in products %}
+        <div class="product" data-id="{{ product.id }}" data-website="{{ product.website }}">
+            <img src="{{ product.img }}" alt="{{ product.product_name }}">
+            <h3>{{ product.product_name }} <span class="website">({{ product.website }})</span></h3>
+            <p class="price">Giá hiện tại: {{ product.current_price | format_price }}</p>
+            <p class="old-price">Giá gốc: {{ product.original_price | format_price }}</p>
+            <p class="description">{{ product.description }}</p>
+
+            <button class="button" onclick="openStore('{{ product.website }}')">Đi tới cửa hàng</button>
+            <button class="button" onclick="window.open('/compare/{{ product.id }}', '_self')">So Sánh Giá</button>
+            
+            
+            
+            <button class="button" onclick="window.open('/price_history/{{ product.id }}', '_self')">Xem lịch sử giá sản phẩm</button>
+            <button class="button" onclick="window.open('/product_detail/{{ product.id }}', '_self')">Xem chi tiết sản phẩm</button>
+
+            <button class="add-to-tab">+</button>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+        function openStore(website) {
+            let url;
+            switch (website) {
+                case 'laptop88':
+                    url = 'https://laptop88.vn/laptop-moi.html';
+                    break;
+                case 'tinhocngoisao':
+                    url = 'https://tinhocngoisao.com/collections/laptop-ban-chay';
+                    break;
+                case 'minhvu':
+                    url = 'https://minhvu.vn';
+                    break;
+                case 'anphat':
+                    url = 'https://www.anphatpc.com.vn';
+                    break;
+                default:
+                    url = website;
+            }
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <div id="tab-content">
+        <h2>Sản phẩm đã chọn</h2>
+        <div id="selected-products"></div>
+        <div id="price-history">
+            <button id="price-history-button">Xem lịch sử giá</button>
+        </div>
+    </div>
+    <!-- Modal hiển thị biểu đồ -->
+
+
+    <div id="icon-tab">
+        <i class="fas fa-cart-plus"></i>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script>
+        $(document).ready(function() {
+           $('#sort, #website-filter').change(function() {
+               var sortOrder = $('#sort').val();
+               var website = $('#website-filter').val();
+               
+               $.ajax({
+                   url: '/filter_products',
+                   type: 'GET',
+                   data: {
+                       sort: sortOrder,
+                       website: website
+                   },
+                   success: function(response) {
+                       $('#search-results').html(response); 
+                   }
+               });
+           });
+
+         
+       });
+       $(document).ready(function () {
+           let selectedProducts = [];
+
+           // Show the tab content when clicking the cart icon
+           $('#icon-tab').click(function () {
+               $('#tab-content').toggle();
+           });
+
+          
+           
+
+           // Add product to selected products
+           $('.add-to-tab').click(function () {
+               const productName = $(this).closest('.product').find('h3').text().split(' - ')[0];
+               const productImg = $(this).closest('.product').find('img').attr('src');
+               const productPrice = $(this).closest('.product').find('.price').text().replace('Giá hiện tại: ', '');
+               const productLink = $(this).closest('.product').find('.button').attr('onclick').match(/'([^']+)'/)[1];
+
+               // Check if product is already selected
+               if (selectedProducts.includes(productName)) {
+                   alert('Sản phẩm đã được chọn!');
+                   return;
+               }
+
+               selectedProducts.push(productName);
+
+               // Append product to selected products
+               $('#selected-products').append(`
+                   <div class="tab-product">
+                       <img src="${productImg}" alt="${productName}">
+                       <span>${productName} - ${productPrice}</span>
+                       <button class="button" onclick="window.open('${productLink}', '_blank')">Xem chi tiết</button>
+                       <button class="button store-button" onclick="window.open('${productLink}', '_blank')">Đi tới cửa hàng</button>
+                       <button class="remove-product button">Xóa</button>
+                   </div>
+               `);
+           });
+
+           // Remove product from the tab
+           $(document).on('click', '.remove-product', function () {
+               const productName = $(this).siblings('span').text().split(' - ')[0];
+               selectedProducts = selectedProducts.filter(product => product !== productName);
+               $(this).parent().remove();
+           });
+
+           // Price history button click
+           $('#price-history-button').click(function () {
+               alert('Chức năng lịch sử giá chưa được cài đặt!');
+           });
+       });
+       
+           
+
+
+
+
+
+
+       document.addEventListener('DOMContentLoaded', function() {
+        const minPriceInput = document.getElementById('min-price');
+        const maxPriceInput = document.getElementById('max-price');
+        const priceRangeSlider = document.getElementById('price-range-slider');
+        const products = document.querySelectorAll('.product');
+        const filteredMessage = document.getElementById('filtered-message');
+
+        // Hàm để chuyển đổi chuỗi giá thành số
+        function parsePrice(priceString) {
+            return parseFloat(priceString.replace(/[^0-9]/g, '').replace(/,/g, '')); // Chỉ lấy số
+        }
+
+        // Hàm lọc sản phẩm
+        function filterProducts() {
+            const minPrice = parsePrice(minPriceInput.value) || 0; // Giá tối thiểu, mặc định là 0
+            const maxPrice = parsePrice(maxPriceInput.value) || Infinity; // Giá tối đa, mặc định là vô cực
+            let hasProductsInRange = false; // Biến kiểm tra có sản phẩm trong khoảng
+
+            products.forEach(product => {
+                const productPriceText = product.querySelector('.price').textContent; // Lấy chuỗi giá hiển thị
+                const productPrice = parsePrice(productPriceText); // Chuyển đổi chuỗi thành số
+
+                // Kiểm tra giá sản phẩm có nằm trong khoảng đã nhập không
+                if (productPrice >= minPrice && productPrice <= maxPrice) {
+                    product.style.display = 'block'; // Hiển thị sản phẩm
+                    hasProductsInRange = true; // Đánh dấu có sản phẩm trong khoảng
+                } else {
+                    product.style.display = 'none'; // Ẩn sản phẩm
+                }
+            });
+
+            // Hiển thị hoặc ẩn thông báo tùy thuộc vào việc có sản phẩm nào trong khoảng
+            if (hasProductsInRange) {
+                filteredMessage.style.display = 'block'; // Hiển thị thông báo
+            } else {
+                filteredMessage.style.display = 'none'; // Ẩn thông báo nếu không có sản phẩm
+            }
+        }
+
+        // Lắng nghe sự kiện thay đổi trên các ô nhập liệu và thanh trượt
+        minPriceInput.addEventListener('input', filterProducts);
+        maxPriceInput.addEventListener('input', filterProducts);
+
+        priceRangeSlider.addEventListener('input', function() {
+            maxPriceInput.value = priceRangeSlider.value;
+            filterProducts(); // Gọi hàm lọc sản phẩm
+        });
+    });
+   </script> -->
+
+   
+
+
+
+   <!-- <script>
+    $(document).ready(function() {
+        // Khởi tạo các biến toàn cục
+        let minPrice = 0;
+        let maxPrice = Infinity;
+        let selectedProducts = [];
+    
+        // Hàm để chuyển đổi chuỗi giá thành số
+        function parsePrice(priceString) {
+            // Chuyển đổi chuỗi giá thành số, bỏ ký tự không phải số
+            return parseFloat(priceString.replace(/[^0-9]/g, '').replace(/,/g, '')) || 0; 
+        }
+    
+        // Hàm lọc sản phẩm
+        function filterProducts() {
+            // Cập nhật giá trị minPrice và maxPrice từ input
+            minPrice = parsePrice($('#min-price').val()) || 0; // Giá tối thiểu
+            maxPrice = parsePrice($('#max-price').val()) || Infinity; // Giá tối đa
+            const website = $('#website-filter').val(); // Cập nhật website
+    
+            // Lọc sản phẩm theo giá và website
+            $('.product').each(function() {
+                const productPriceText = $(this).find('.price').text();
+                const productPrice = parsePrice(productPriceText); // Chuyển đổi chuỗi thành số
+                const productWebsite = $(this).data('website'); // Lấy website từ thuộc tính data
+    
+                // Kiểm tra xem giá sản phẩm có nằm trong khoảng nhập không
+                const isPriceInRange = (productPrice >= minPrice && productPrice <= maxPrice);
+                const isWebsiteMatched = (website === '' || productWebsite === website);
+    
+                // Hiển thị hoặc ẩn sản phẩm
+                if (isPriceInRange && isWebsiteMatched) {
+                    $(this).show(); // Hiển thị sản phẩm
+                } else {
+                    $(this).hide(); // Ẩn sản phẩm
+                }
+    
+                // Debugging: Thông báo giá và điều kiện
+                console.log(`Product Price: ${productPrice}, Min Price: ${minPrice}, Max Price: ${maxPrice}, Is In Range: ${isPriceInRange}`);
+            });
+    
+            // Gửi yêu cầu AJAX để lọc sản phẩm nếu cần
+            $.ajax({
+                url: '/filter_products',
+                type: 'GET',
+                data: {
+                    sort: $('#sort').val(),
+                    website: website
+                },
+                success: function(response) {
+                    $('#search-results').html(response); 
+                }
+            });
+        }
+    
+        // Hàm sắp xếp sản phẩm
+        function sortProducts() {
+            const products = $('.product').toArray();
+            const order = $('#sort').val();
+    
+            products.sort(function(a, b) {
+                const priceA = parsePrice($(a).find('.price').text());
+                const priceB = parsePrice($(b).find('.price').text());
+                return order === 'asc' ? priceA - priceB : priceB - priceA; // Sắp xếp tăng dần hoặc giảm dần
+            });
+    
+            // Cập nhật danh sách sản phẩm sau khi sắp xếp
+            $('#search-results').empty().append(products);
+        }
+    
+        // Lắng nghe sự thay đổi ở phần sắp xếp và lọc website
+        $('#sort, #website-filter').change(function() {
+            filterProducts(); // Gọi hàm lọc sản phẩm khi có thay đổi
+            sortProducts(); // Gọi hàm sắp xếp sản phẩm
+        });
+    
+        // Lắng nghe sự thay đổi ở các ô nhập liệu giá
+        $('#min-price, #max-price').on('input', function() {
+            filterProducts(); // Gọi hàm lọc sản phẩm khi có thay đổi
+        });
+    
+        // Hiển thị nội dung tab khi nhấp vào biểu tượng giỏ hàng
+        $('#icon-tab').click(function() {
+            $('#tab-content').toggle();
+        });
+    
+        // // Thêm sản phẩm vào danh sách sản phẩm đã chọn
+        $('.add-to-tab').click(function() {
+            const productName = $(this).closest('.product').find('h3').text().split(' - ')[0];
+            const productImg = $(this).closest('.product').find('img').attr('src');
+            const productPrice = $(this).closest('.product').find('.price').text().replace('Giá hiện tại: ', '');
+            const productLink = $(this).closest('.product').find('.button').attr('onclick').match(/'([^']+)'/)[1];
+    
+            // Kiểm tra xem sản phẩm đã được chọn chưa
+            if (selectedProducts.includes(productName)) {
+                alert('Sản phẩm đã được chọn!');
+                return;
+            }
+    
+            selectedProducts.push(productName);
+    
+            // Thêm sản phẩm vào danh sách sản phẩm đã chọn
+            $('#selected-products').append(`
+                <div class="tab-product">
+                    <img src="${productImg}" alt="${productName}">
+                    <span>${productName} - ${productPrice}</span>
+                    <button class="button" onclick="window.open('${productLink}', '_blank')">Xem chi tiết</button>
+                    <button class="button store-button" onclick="window.open('${productLink}', '_blank')">Đi tới cửa hàng</button>
+                    <button class="remove-product button">Xóa</button>
+                </div>
+            `);
+        });
+    
+
+
+
+        // Xóa sản phẩm khỏi danh sách đã chọn
+        $(document).on('click', '.remove-product', function() {
+            const productName = $(this).siblings('span').text().split(' - ')[0];
+            selectedProducts = selectedProducts.filter(product => product !== productName);
+            $(this).parent().remove();
+        });
+    
+        // Nút xem lịch sử giá
+        $('#price-history-button').click(function() {
+            alert('Chức năng lịch sử giá chưa được cài đặt!');
+        });
+    
+        // Lắng nghe sự kiện thay đổi trên thanh trượt
+        const priceRangeSlider = document.getElementById('price-range-slider');
+        if (priceRangeSlider) {
+            priceRangeSlider.addEventListener('input', function() {
+                $('#max-price').val(priceRangeSlider.value);
+                filterProducts(); // Gọi hàm lọc sản phẩm
+            });
+        }
+    });
+    </script> -->
+    
+    
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- <script>
+        $(document).ready(function() {
+            // Khởi tạo các biến toàn cục
+            let minPrice = 0;
+            let maxPrice = Infinity;
+            let selectedProducts = [];
+        
+            // Ánh xạ tên website với URL tương ứng
+            const websiteLinks = {
+                'anphat': 'https://www.anphatpc.com.vn',
+                'minhvu': 'https://minhvu.vn',
+                'tinhocngoisao': 'https://tinhocngoisao.com/collections/laptop-ban-chay',
+                'laptop88': 'https://laptop88.vn/laptop-moi.html'
+            };
+        
+            // Hàm để chuyển đổi chuỗi giá thành số
+            function parsePrice(priceString) {
+                return parseFloat(priceString.replace(/[^0-9]/g, '').replace(/,/g, '')) || 0; 
+            }
+        
+            // Hàm lấy URL cửa hàng từ tên sản phẩm
+            function getStoreLink(productName) {
+                for (const [key, value] of Object.entries(websiteLinks)) {
+                    if (productName.toLowerCase().includes(key)) {
+                        return value;
+                    }
+                }
+                return '#'; // Trả về # nếu không tìm thấy
+            }
+        
+            // Hàm lọc sản phẩm
+            function filterProducts() {
+                minPrice = parsePrice($('#min-price').val()) || 0; // Giá tối thiểu
+                maxPrice = parsePrice($('#max-price').val()) || Infinity; // Giá tối đa
+                const website = $('#website-filter').val(); // Cập nhật website
+        
+                $('.product').each(function() {
+                    const productPriceText = $(this).find('.price').text();
+                    const productPrice = parsePrice(productPriceText); // Chuyển đổi chuỗi thành số
+                    const productWebsite = $(this).data('website'); // Lấy website từ thuộc tính data
+        
+                    const isPriceInRange = (productPrice >= minPrice && productPrice <= maxPrice);
+                    const isWebsiteMatched = (website === '' || productWebsite === website);
+        
+                    if (isPriceInRange && isWebsiteMatched) {
+                        $(this).show(); // Hiển thị sản phẩm
+                    } else {
+                        $(this).hide(); // Ẩn sản phẩm
+                    }
+        
+                    console.log(`Product Price: ${productPrice}, Min Price: ${minPrice}, Max Price: ${maxPrice}, Is In Range: ${isPriceInRange}`);
+                });
+            }
+        
+            // Hàm sắp xếp sản phẩm
+            function sortProducts() {
+                const products = $('.product').toArray();
+                const order = $('#sort').val();
+        
+                products.sort(function(a, b) {
+                    const priceA = parsePrice($(a).find('.price').text());
+                    const priceB = parsePrice($(b).find('.price').text());
+                    return order === 'asc' ? priceA - priceB : priceB - priceA; // Sắp xếp tăng dần hoặc giảm dần
+                });
+        
+                // Cập nhật danh sách sản phẩm sau khi sắp xếp
+                $('#search-results').empty().append(products);
+            }
+        
+            // Lắng nghe sự thay đổi ở phần sắp xếp và lọc website
+            $('#sort, #website-filter').change(function() {
+                filterProducts(); // Gọi hàm lọc sản phẩm khi có thay đổi
+                sortProducts(); // Gọi hàm sắp xếp sản phẩm
+            });
+        
+            // Lắng nghe sự thay đổi ở các ô nhập liệu giá
+            $('#min-price, #max-price').on('input', function() {
+                filterProducts(); // Gọi hàm lọc sản phẩm khi có thay đổi
+            });
+        
+            // Hiển thị nội dung tab khi nhấp vào biểu tượng giỏ hàng
+            $('#icon-tab').click(function() {
+                $('#tab-content').toggle(); // Chuyển đổi hiển thị của nội dung tab
+            });
+        
+            // Thêm sản phẩm vào danh sách sản phẩm đã chọn
+            $('.add-to-tab').click(function() {
+                const productElement = $(this).closest('.product');
+                const productName = productElement.find('h3').text().split(' - ')[0];
+                const productImg = productElement.find('img').attr('src');
+                const productPrice = productElement.find('.price').text().replace('Giá hiện tại: ', '');
+                const productId = productElement.data('id'); // Lấy ID sản phẩm từ thuộc tính data-id
+                const productLink = `/product_detail/${productId}`; // Tạo đường dẫn tới trang chi tiết sản phẩm
+        
+                // Kiểm tra xem sản phẩm đã được chọn chưa
+                if (selectedProducts.includes(productName)) {
+                    alert('Sản phẩm đã được chọn!');
+                    return;
+                }
+        
+                selectedProducts.push(productName);
+        
+                // Thêm sản phẩm vào danh sách sản phẩm đã chọn
+                $('#selected-products').append(`
+                    <div class="tab-product">
+                        <img src="${productImg}" alt="${productName}">
+                        <span>${productName} - ${productPrice}</span>
+                        <button class="button" onclick="window.open('${productLink}', '_blank')">Xem chi tiết</button>
+                        <button class="button store-button" onclick="window.open('${getStoreLink(productName)}', '_blank')">Đi tới cửa hàng</button>
+                        <button class="remove-product button">Xóa</button>
+                    </div>
+                `);
+            });
+        
+            // Xóa sản phẩm khỏi danh sách đã chọn
+            $(document).on('click', '.remove-product', function() {
+                const productName = $(this).siblings('span').text().split(' - ')[0];
+                selectedProducts = selectedProducts.filter(product => product !== productName);
+                $(this).parent().remove(); // Xóa sản phẩm khỏi DOM
+            });
+        
+            // Nút xem lịch sử giá
+            $('#price-history-button').click(function() {
+                if (selectedProducts.length === 0) {
+                    alert('Không có sản phẩm nào được chọn để xem lịch sử giá!');
+                    return;
+                }
+        
+                // Gửi yêu cầu AJAX đến server để lấy lịch sử giá cho tất cả sản phẩm
+                $.ajax({
+                    url: '/product_price_history', // Đường dẫn đến route mới
+                    type: 'POST', // Sử dụng POST để gửi danh sách productIds
+                    contentType: 'application/json',
+                    data: JSON.stringify({ product_ids: selectedProducts }), // Chuyển đổi danh sách thành JSON
+                    success: function(response) {
+                        // Hiển thị biểu đồ trong một modal hoặc phần nào đó trong giao diện
+                        $('#price-history-modal').html(response);
+                        $('#price-history-modal').modal('show'); // Hiển thị modal
+                    },
+                    error: function() {
+                        alert('Không thể lấy dữ liệu lịch sử giá. Vui lòng thử lại sau.');
+                    }
+                });
+            });
+        
+            // Lắng nghe sự kiện thay đổi trên thanh trượt
+            const priceRangeSlider = document.getElementById('price-range-slider');
+            if (priceRangeSlider) {
+                priceRangeSlider.addEventListener('input', function() {
+                    $('#max-price').val(priceRangeSlider.value);
+                    filterProducts(); // Gọi hàm lọc sản phẩm
+                });
+            }
+        });
+        </script> -->
+        
+    
+    
+        <script>
+          $(document).ready(function() {
+    // Khởi tạo các biến toàn cục
+    let minPrice = 0;
+    let maxPrice = Infinity;
+    let selectedProducts = [];
+
+    // Ánh xạ tên website với URL tương ứng
+    const websiteLinks = {
+        'anphat': 'https://www.anphatpc.com.vn',
+        'minhvu': 'https://minhvu.vn',
+        'tinhocngoisao': 'https://tinhocngoisao.com/collections/laptop-ban-chay',
+        'laptop88': 'https://laptop88.vn/laptop-moi.html'
+    };
+
+    // Hàm để chuyển đổi chuỗi giá thành số
+    function parsePrice(priceString) {
+        return parseFloat(priceString.replace(/[^0-9]/g, '').replace(/,/g, '')) || 0;
+    }
+    document.getElementById('refresh-button').addEventListener('click', function() {
+        // Làm mới trang và tải lại tất cả sản phẩm
+        window.location.href = '/search'; // Điều hướng lại tới /search để tải tất cả sản phẩm
+    });
+
+
+
+
+
+    // Hàm lấy URL cửa hàng từ tên sản phẩm
+    function getStoreLink(productName) {
+        for (const [key, value] of Object.entries(websiteLinks)) {
+            if (productName.toLowerCase().includes(key)) {
+                return value;
+            }
+        }
+        return '#'; // Trả về # nếu không tìm thấy
+    }
+
+    // Hàm lọc sản phẩm theo giá và website
+    function filterProducts() {
+        minPrice = parsePrice($('#min-price').val()) || 0;
+        maxPrice = parsePrice($('#max-price').val()) || Infinity;
+        const website = $('#website-filter').val();
+
+        $('.product').each(function() {
+            const productPriceText = $(this).find('.price').text();
+            const productPrice = parsePrice(productPriceText);
+            const productWebsite = $(this).data('website');
+
+            const isPriceInRange = (productPrice >= minPrice && productPrice <= maxPrice);
+            const isWebsiteMatched = (website === '' || productWebsite === website);
+
+            // Hiển thị hoặc ẩn sản phẩm dựa trên điều kiện lọc
+            if (isPriceInRange && isWebsiteMatched) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+
+
+    // Hàm sắp xếp sản phẩm
+    function sortProducts() {
+        const products = $('.product').toArray();
+        const order = $('#sort').val();
+
+        products.sort((a, b) => {
+            const priceA = parsePrice($(a).find('.price').text());
+            const priceB = parsePrice($(b).find('.price').text());
+            return order === 'asc' ? priceA - priceB : priceB - priceA;
+        });
+
+        // Cập nhật danh sách sản phẩm sau khi sắp xếp
+        $('#search-results').empty().append(products);
+    }
+
+    // Lắng nghe sự thay đổi ở phần sắp xếp và lọc website
+    $('#sort, #website-filter').change(function() {
+        filterProducts();
+        sortProducts();
+    });
+
+    // Lắng nghe sự thay đổi ở các ô nhập liệu giá
+    $('#min-price, #max-price').on('input', filterProducts);
+
+    // Hiển thị nội dung tab khi nhấp vào biểu tượng giỏ hàng
+    $('#icon-tab').click(function() {
+        $('#tab-content').toggle();
+    });
+
+    // Thêm sản phẩm vào danh sách sản phẩm đã chọn
+    $('.add-to-tab').click(function() {
+        const productElement = $(this).closest('.product');
+        const productName = productElement.find('h3').text().split(' - ')[0];
+        const productImg = productElement.find('img').attr('src');
+        const productPrice = productElement.find('.price').text().replace('Giá hiện tại: ', '').trim();
+        const productId = productElement.data('id');
+        const productLink = `/product_detail/${productId}`;
+
+        // Kiểm tra xem sản phẩm đã được chọn chưa
+        if (selectedProducts.includes(productId)) {
+            alert('Sản phẩm đã được chọn!');
+            return;
+        }
+
+        selectedProducts.push(productId);
+
+        // Thêm sản phẩm vào danh sách sản phẩm đã chọn
+        $('#selected-products').append(`
+            <div class="tab-product" data-id="${productId}">
+                <img src="${productImg}" alt="${productName}">
+                <span>${productName} - ${productPrice}</span>
+                <button class="button" onclick="window.open('${productLink}', '_blank')">Xem chi tiết</button>
+                <button class="button store-button" onclick="window.open('${getStoreLink(productName)}', '_blank')">Đi tới cửa hàng</button>
+                <button class="remove-product button">Xóa</button>
+            </div>
+        `);
+    });
+
+    // Xóa sản phẩm khỏi danh sách đã chọn
+    $(document).on('click', '.remove-product', function() {
+        const productId = $(this).closest('.tab-product').data('id');
+        selectedProducts = selectedProducts.filter(product => product !== productId);
+        $(this).parent().remove();
+    });
+
+    // Nút xem lịch sử giá
+    $('#price-history-button').click(function() {
+        if (selectedProducts.length === 0) {
+            alert('Không có sản phẩm nào được chọn để xem lịch sử giá!');
+            return;
+        }
+
+        // Chuyển hướng đến trang biểu đồ lịch sử giá với danh sách ID sản phẩm
+        const productIds = selectedProducts.join(',');
+        window.location.href = `/price_history_multi?product_ids=${productIds}`;
+    });
+
+    // Lắng nghe sự kiện thay đổi trên thanh trượt
+    const priceRangeSlider = document.getElementById('price-range-slider');
+    if (priceRangeSlider) {
+        priceRangeSlider.addEventListener('input', function() {
+            $('#max-price').val(priceRangeSlider.value);
+            filterProducts();
+        });
+    }
+});
+
+
+
+            </script>
+            
+        
+        
+            
+        
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+    
+
+
+
+</body>
+
+</html>
+

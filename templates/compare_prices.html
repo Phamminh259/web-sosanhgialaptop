@@ -1,0 +1,63 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>So sánh giá sản phẩm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>So sánh giá sản phẩm</h1>
+
+<table class="comparison-table">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Giá hiện tại</th>
+            <th>Giá gốc</th>
+            <th>Website</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.current_price | format_price }}</td>
+            <td>{{ product.original_price | format_price }}</td>
+            <td>{{ product.website }}</td>
+            <td><a href="/product_detail/{{ product.id }}">Xem chi tiết</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="/search" class="back-button">Quay lại trang tìm kiếm</a>
+
+</body>
+</html> -->

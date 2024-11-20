@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Prices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Tổng quát */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2rem;
+            text-transform: uppercase;
+        }
+
+        /* Lưới sản phẩm */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px;
+            flex: 1;
+        }
+
+        .product-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 400px;
+        }
+
+        .product-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .product-item img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+
+        .product-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .product-item h2 {
+            font-size: 1.2rem;
+            color: #34495e;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .product-item p {
+            font-size: 0.95rem;
+            color: #555;
+            margin: 5px 0;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.2s, transform 0.2s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+        }
+
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin: 5px 0;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ecf0f1;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: #bdc3c7;
+            font-size: 1.2rem;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #ecf0f1;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <h1>So Sánh Giá cho {{ product_name }}</h1>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-item">
+            <img src="{{ product.img }}" alt="{{ product.product_name }}">
+            <h2>{{ product.product_name }} - {{ product.website }}</h2>
+            <p>Giá Hiện Tại: {{ product.current_price | format_price }}</p>
+            <p>Giá Gốc: {{ product.original_price | format_price }}</p>
+            <a href="{{ product.website }}" class="btn">Đi tới Cửa Hàng</a>
+        </div>
+        {% endfor %}
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Về Chúng Tôi</h3>
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                    <li><a href="#">Điều khoản dịch vụ</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Hỗ Trợ Khách Hàng</h3>
+                <ul>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Dịch vụ bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Kết Nối Với Chúng Tôi</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 So Sánh Laptop - Tất cả quyền được bảo lưu. Thiết kế bởi Nhóm So Sánh Giá.</p>
+        </div>
+    </footer>
+</body>
+</html>

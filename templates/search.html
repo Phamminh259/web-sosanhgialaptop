@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm kiếm sản phẩm</title>
+</head>
+<body>
+    <h1>Tìm kiếm sản phẩm</h1>
+    <form action="/" method="POST">
+        <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." list="suggestions" required>
+        <datalist id="suggestions">
+            <!-- Lấy danh sách sản phẩm từ cơ sở dữ liệu để làm gợi ý -->
+            {% for product in products %}
+            <option value="{{ product.product_name }}"></option>
+            {% endfor %}
+        </datalist>
+        <button type="submit">Tìm kiếm</button>
+    </form>
+</body>
+</html>

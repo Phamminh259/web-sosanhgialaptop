@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Thêm Font Awesome -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .product-detail {
+            max-width: 1200px; /* Tăng chiều rộng tối đa cho phần chi tiết sản phẩm */
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex; /* Sử dụng flexbox để sắp xếp theo hàng ngang */
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        .product-image {
+            flex: 1; /* Chiếm không gian 1 phần */
+            margin-right: 20px; /* Khoảng cách giữa hình ảnh và thông tin sản phẩm */
+        }
+        .product-image img {
+            width: 100%; /* Đảm bảo hình ảnh không vượt quá chiều rộng */
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .product-image img:hover {
+            transform: scale(1.05); /* Phóng to hình ảnh khi hover */
+        }
+        .product-info {
+            flex: 2; /* Chiếm không gian 2 phần */
+            display: flex;
+            flex-direction: column; /* Sắp xếp các phần tử theo chiều dọc */
+            justify-content: space-between; /* Tạo khoảng cách giữa các phần tử */
+        }
+        h1 {
+            font-size: 28px;
+            color: #333;
+            text-align: left; /* Căn trái tiêu đề */
+        }
+        h2 {
+            color: #666;
+            font-size: 22px;
+            text-align: left; /* Căn trái tiêu đề phụ */
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+            text-align: left; /* Căn trái các đoạn văn */
+        }
+        .notification-form {
+            margin-top: 30px; 
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Căn trái form */
+        }
+        .notification-form input[type="email"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            width: 120%;
+            max-width: 400px; 
+            transition: border-color 0.3s;
+        }
+        .notification-form input[type="email"]:focus {
+            border-color: #5cb85c; 
+        }
+        .notification-buttons {
+            display: flex; /* Sắp xếp các nút trong cùng một hàng */
+            align-items: center; /* Căn giữa các nút */
+        }
+        .notification-form button {
+            padding: 12px;
+            background: #5cb85c;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.3s; 
+            margin-right: 10px; /* Khoảng cách giữa nút gửi và nút yêu thích */
+        }
+        .notification-form button:hover {
+            background: #4cae4c; 
+            transform: translateY(-2px); 
+        }
+        .favorite-button {
+            background: none;
+            border: none;
+            color: #e74c3c; /* Màu cho biểu tượng yêu thích */
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .favorite-button:hover {
+            color: #c0392b; /* Đổi màu khi hover */
+        }
+        .back-link {
+            display: inline-block; /* Thay đổi để có thể căn chỉnh */
+            margin-top: 20px;
+            margin-left: auto; /* Căn phải nút quay lại */
+            text-decoration: none;
+            color: #5cb85c; 
+            font-size: 16px;
+            transition: color 0.3s; /* Thêm hiệu ứng chuyển màu */
+        }
+        .back-link:hover {
+            text-decoration: underline; 
+            color: #3e8e3e; /* Đổi màu khi hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="product-detail">
+        <div class="product-image">
+            <img src="{{ product.img }}" alt="{{ product.product_name }}">
+        </div>
+        <div class="product-info">
+            <h1>{{ product.product_name }}</h1>
+            <h2>Website: {{ product.website }}</h2>
+            <p>Current Price: {{ product.current_price | format_price }}</p>
+            <p>Original Price: {{ product.original_price | format_price }}</p>
+            <p>Description: {{ product.description }}</p>
+
+            <!-- Form nhận thông báo -->
+            <div class="notification-form">
+                <h3>Nhận thông báo khi có giá mới!</h3>
+                <form action="{{ url_for('submit_notification') }}" method="POST">
+                    <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                    <input type="hidden" name="product_id" value="{{ product.id }}"> 
+                    <div class="notification-buttons">
+                        <button type="submit" class="submit-notification">Gửi thông báo</button>
+                        <button type="button" class="favorite-button" onclick="addToFavorites('{{ product.id }}');">
+                            <i class="fas fa-heart"></i> <!-- Biểu tượng trái tim -->
+                        </button>
+                    </div>
+                </form>
+                <a href="/" class="back-link">Quay lại</a> <!-- Nút quay lại -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addToFavorites(productId) {
+            // Xử lý thêm sản phẩm vào danh sách yêu thích
+            alert('Sản phẩm ' + productId + ' đã được thêm vào yêu thích!');
+            // Ở đây bạn có thể thực hiện AJAX hoặc chuyển hướng đến một route để lưu sản phẩm yêu thích
+        }
+    </script>
+</body>
+</html>

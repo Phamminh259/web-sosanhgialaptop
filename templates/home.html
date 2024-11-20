@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search with Login</title>
+    <!-- Thêm Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Thêm Font Awesome để sử dụng biểu tượng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../static/js/scripts.js">
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #8e44ad, #3498db);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        #logo {
+            width: 250px;
+            margin-right: 20px;
+        }
+
+        #search-bar {
+            width: 60%;
+            position: relative;
+        }
+
+        #search-bar form {
+            display: flex;
+            width: 100%;
+        }
+
+        #search-bar input[type="text"] {
+            flex: 1;
+            padding: 15px;
+            border-radius: 25px;
+            border: 1px solid #fff;
+            font-size: 1.2em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #search-bar input[type="text"]:focus {
+            border-color: #ddd;
+        }
+
+        #search-bar input[type="submit"] {
+            padding: 15px 30px;
+            background-color: #fff;
+            color: #3498db;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #search-bar input[type="submit"]:hover {
+            background-color: #ddd;
+        }
+
+        #login-button {
+            margin-left: 20px;
+        }
+
+        #login-button a {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            color: #3498db;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+        #login-button a i {
+            margin-right: 10px;
+        }
+
+        #login-button a:hover {
+            background-color: #ddd;
+        }
+
+        /* Footer cố định ở cuối trang */
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+        }
+
+        .footer-column h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin: 5px 0;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ecf0f1;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: #bdc3c7;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #ecf0f1;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #bdc3c7;
+        }
+
+        /* Thông tin người dùng */
+        #user-info {
+            margin-left: 20px;
+            font-size: 1.2em;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" id="logo">
+        <div id="search-bar">
+            <form action="/search" method="GET">
+                <input type="text" name="query" placeholder="Search products..." autocomplete="off">
+                <input type="submit" value="Search">
+            </form>
+        </div>
+        
+        <div id="login-button">
+            {% if username %}
+                <span>Xin chào, {{ username }}!</span> 
+                <a href="{{ url_for('logout') }}">Đăng xuất</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">
+                    <i class="fas fa-user"></i> Đăng nhập
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Về Chúng Tôi</h3>
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Hỗ Trợ Khách Hàng</h3>
+                <ul>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Dịch vụ bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Kết Nối Với Chúng Tôi</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 So Sánh Giá. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

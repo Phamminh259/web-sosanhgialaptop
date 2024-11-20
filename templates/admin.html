@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="email"],
+        input[type="password"],
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            margin-right: 10px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .alert {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quản lý Admin</h1>
+    
+    <h2>Quản lý Tài khoản</h2>
+    <form action="/admin/accounts/add" method="post">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Mật khẩu" required>
+        <input type="text" name="username" placeholder="Tên người dùng" required>
+        <select name="role">
+            <option value="User">Người dùng</option>
+            <option value="Admin">Quản trị viên</option>
+        </select>
+        <button type="submit">Thêm tài khoản</button>
+    </form>
+
+    <h2>Danh sách Tài khoản</h2>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>Tên người dùng</th>
+            <th>Vai trò</th>
+            <th>Hành động</th>
+        </tr>
+        {% for account in accounts %}
+        <tr>
+            <td>{{ account.email }}</td>
+            <td>{{ account.username }}</td>
+            <td>{{ account.role }}</td>
+            <td>
+                <a href="{{ url_for('edit_account', id=account.id) }}">Sửa</a>
+                <form action="{{ url_for('delete_account', id=account.id) }}" method="post" style="display:inline;">
+                    <button type="submit">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Quản lý Thông báo</h2>
+    <form action="/admin/notifications/add" method="post">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="number" name="product_id" placeholder="ID sản phẩm" required>
+        <button type="submit">Thêm thông báo</button>
+    </form>
+
+    <h2>Danh sách Thông báo</h2>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>ID sản phẩm</th>
+            <th>Trạng thái gửi</th>
+            <th>Ngày tạo</th>
+            <th>Hành động</th>
+        </tr>
+        {% for notification in notifications %}
+        <tr>
+            <td>{{ notification.email }}</td>
+            <td>{{ notification.product_id }}</td>
+            <td>{{ 'Đã gửi' if notification.is_sent else 'Chưa gửi' }}</td>
+            <td>{{ notification.created_at }}</td>
+            <td>
+                <form action="{{ url_for('delete_notification', id=notification.id) }}" method="post" style="display:inline;">
+                    <button type="submit">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Hiển thị thông báo -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

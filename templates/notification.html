@@ -1,0 +1,6 @@
+<form action="{{ url_for('submit_notification') }}" method="post">
+    <input type="hidden" name="product_id" value="{{ product_id }}">
+    <label for="email">Nhập email của bạn để nhận thông báo giá giảm:</label>
+    <input type="email" name="email" required>
+    <button type="submit">Nhận Thông Báo</button>
+</form>
